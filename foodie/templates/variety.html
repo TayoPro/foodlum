@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block title %} | {{single.name|title}} {% endblock title %}
+
+
+{% block header %} {% include "header.html" %} {% endblock header %}
+
+
+{% block banner %} {% include "banner2.html" %} {% endblock banner %}
+
+{% block content %}
+<!--  -->
+  <div class="container-fluid mt-4 mb-4">
+    <h1  class="subject">{{single.name|title}}</h1> 
+    <div class="row">
+     <!-- box 1  -->
+     {% if variety %}
+       {% for item in variety %}
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 w-25 mt-5 mb-3">
+            <div class="card w-100">
+              <a href="{% url 'meals' %}"><img src="{{item.image.url}}" class="card-img-top w-100  mb-3"></a>
+              <div class="card-body text-center mb-4">
+                <h5 class="card-title mb-3 text-info font-weight-bolder">Variety: {{item.variety.name| title}}</h5>
+                <h5 class="card-title mb-3 text-info font-weight-bolder">Meal: {{item.meal| title}}</h5>
+                <p class="card-text mb-4 text-success">Price:
+                  {% if item.discount %}
+                    <del>{{item.price|floatformat:2|intcomma}}</del>
+                    <span>{{item.discount|floatformat:2|intcomma}}</span>
+                  {% else %}
+                    <span>{{item.price|floatformat:2|intcomma}}</span>
+                  {% endif %}
+                </p>
+                <a href="{% url 'meal' item.id item.slug %}" class="text-warning">View Details</a>    
+              </div>
+            </div>
+          </div>
+          <!-- box 1 done -->
+       {% endfor %}
+     {% endif %}
+    </div>
+  </div>   
+  <!--  -->
+<!--  -->  
+{% endblock content %}
+
+
+{% block prefoot %} {% include "prefoot.html" %}{% endblock prefoot %}
+
+
+{% block footer %} {% include "footer.html" %}{% endblock footer %}
